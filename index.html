@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-text">
+    <h1>Learn without limits with the cloud</h1>
+    <p>CloudLearn is a cloud based learning management system. Access courses,
+       track your progress and learn from expert instructors on any device.</p>
+    <a class="btn" href="{{ url_for('courses') }}">Browse Courses</a>
+    {% if not session.user_id %}
+      <a class="btn btn-outline" href="{{ url_for('register') }}">Join for free</a>
+    {% endif %}
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><strong>{{ stats.courses }}</strong><span>Courses</span></div>
+    <div class="stat"><strong>{{ stats.students }}</strong><span>Learners</span></div>
+    <div class="stat"><strong>24/7</strong><span>Access</span></div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="feature"><h3>&#9729; Cloud Access</h3><p>Study from any browser, anywhere, with your progress saved online.</p></div>
+  <div class="feature"><h3>&#128200; Track Progress</h3><p>Mark lessons complete and watch your progress bar grow.</p></div>
+  <div class="feature"><h3>&#127891; Expert Courses</h3><p>Structured courses designed and taught by experienced instructors.</p></div>
+</section>
+
+<section>
+  <h2 class="section-title">Featured Courses</h2>
+  <div class="grid">
+    {% for c in featured %}
+    <article class="card">
+      <span class="tag">{{ c.category }}</span>
+      <h3>{{ c.title }}</h3>
+      <p>{{ c.description }}</p>
+      <p class="meta">{{ c.instructor }} &middot; {{ c.lessons }} lessons</p>
+      <a class="btn btn-small" href="{{ url_for('course_detail', course_id=c.id) }}">View Course</a>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
